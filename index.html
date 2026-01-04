@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>35 лет — Баня. Традиция.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#2b2b2b;color:#e8c26a;font-family:Montserrat,sans-serif}
+section{padding:56px 16px;text-align:center}
+.hero{min-height:100vh;background:url('assets/images/hero.jpg') center/cover no-repeat;padding-top:20px}
+h1,h2{font-family:'Playfair Display',serif;margin-bottom:18px}
+.subtitle{margin-bottom:24px}
+.timer{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.time{border:1px solid #e8c26a;border-radius:12px;padding:10px 14px;min-width:78px;background:rgba(43,43,43,.85)}
+/* BIG PHOTO GALLERY */
+.gallery{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+  max-width:900px;
+  margin:0 auto;
+}
+.gallery img{
+  width:100%;
+  height:auto;
+  border-radius:16px;
+  opacity:0;
+  transform:translateY(18px);
+  transition:.8s;
+}
+.gallery img.show{opacity:1;transform:none}
+@media(min-width:768px){
+  .gallery{grid-template-columns:1fr 1fr}
+}
+video{width:100%;max-width:820px;border-radius:18px;margin-top:20px}
+.music-btn{position:fixed;bottom:20px;right:20px;background:#e8c26a;color:#2b2b2b;border:none;padding:14px 18px;border-radius:30px;font-weight:600}
+.toast{font-size:19px;line-height:1.5;max-width:820px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>35 лет<br>Максим Александрович Гармаш</h1>
+  <div class="subtitle">До встречи осталось:</div>
+  <div class="timer">
+    <div class="time"><div id="d">0</div>дней</div>
+    <div class="time"><div id="h">0</div>часов</div>
+    <div class="time"><div id="m">0</div>минут</div>
+    <div class="time"><div id="s">0</div>секунд</div>
+  </div>
+</section>
+
+<section>
+<h2>Мы были молоды — начало традиций</h2>
+<p>С этого всё начиналось. Первые встречи, первые разговоры до утра и та самая баня, которая стала больше, чем просто местом.</p>
+<div class="gallery">
+<img src="assets/images/young1.jpg">
+<img src="assets/images/young2.jpg">
+<img src="assets/images/young3.jpg">
+<img src="assets/images/young4.jpg">
+<img src="assets/images/young5.jpg">
+</div>
+</section>
+
+<section>
+<h2>Наши дни</h2>
+<p>Годы идут, но главное остаётся. Мы стали взрослее, но традиция жива — и с каждым годом становится только крепче.</p>
+<div class="gallery">
+<img src="assets/images/today1.jpg">
+<img src="assets/images/today2.jpg">
+</div>
+</section>
+
+<section>
+<h2>Приглашение</h2>
+<video controls playsinline>
+<source src="assets/video/invite.mp4" type="video/mp4">
+</video>
+</section>
+
+<section>
+<h2>Финальный тост</h2>
+<p class="toast">За дружбу, проверенную временем.<br>За тех, кто был с самого начала и тех, кто стал частью пути.<br>За традицию, которую мы продолжаем.</p>
+</section>
+
+<button class="music-btn" onclick="toggleMusic()">🎶 Музыка</button>
+<audio id="music" loop>
+<source src="assets/music/za_druzei.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music=document.getElementById('music');let play=false;
+function toggleMusic(){play?music.pause():music.play();play=!play;}
+const eventDate=new Date("2026-01-08T18:00:00").getTime();
+setInterval(()=>{
+ const now=new Date().getTime(),t=eventDate-now;
+ if(t<0)return;
+ d.innerText=Math.floor(t/86400000);
+ h.innerText=Math.floor(t%86400000/3600000);
+ m.innerText=Math.floor(t%3600000/60000);
+ s.innerText=Math.floor(t%60000/1000);
+},1000);
+
+const imgs=document.querySelectorAll('.gallery img');
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('show')),{threshold:.2});
+imgs.forEach(i=>obs.observe(i));
+</script>
+
+</body>
+</html>
